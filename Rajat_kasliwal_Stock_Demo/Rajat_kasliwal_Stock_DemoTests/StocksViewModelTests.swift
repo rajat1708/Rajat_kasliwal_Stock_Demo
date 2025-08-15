@@ -65,19 +65,19 @@ class StocksViewModelTests: XCTestCase {
     }
 
     func testCurrentValue() {
-        XCTAssertEqual(viewModel.currentValue(), 400.0)
+        XCTAssertEqual(viewModel.currentValue(), "₹400.00")
     }
 
     func testTotalPnL() {
-        XCTAssertEqual(viewModel.totalPnL(), 5.0)
+        XCTAssertEqual(viewModel.totalPnL(), "₹5.00")
     }
 
     func testTotalInvestment() {
-        XCTAssertEqual(viewModel.totalInvestment(), 395.0)
+        XCTAssertEqual(viewModel.totalInvestment(), "₹395.00")
     }
 
     func testTodayChange() {
-        XCTAssertEqual(viewModel.todayChange(), -2.0)
+        XCTAssertEqual(viewModel.todayChange(), "₹-2.00")
     }
 
     func testTotalPnLColour_Positive() {
