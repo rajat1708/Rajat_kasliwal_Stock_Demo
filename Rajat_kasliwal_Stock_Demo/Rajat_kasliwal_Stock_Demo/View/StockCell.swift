@@ -19,6 +19,14 @@ class StockCell: UITableViewCell {
 
     private let ltpLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .lightGray
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private let ltpLabelValue: UILabel = {
+        let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .darkGray
         label.numberOfLines = 1
@@ -26,6 +34,14 @@ class StockCell: UITableViewCell {
     }()
 
     private let qtyLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .lightGray
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private let qtyLabelValue: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .black
@@ -35,13 +51,21 @@ class StockCell: UITableViewCell {
 
     private let pnlLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .lightGray
         label.numberOfLines = 1
         return label
     }()
 
+    private let pnlLabelValue: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 1
+        return label
+    }()
+    
     func changepnlLabelColor(to color: UIColor) {
-        pnlLabel.textColor = color
+        pnlLabelValue.textColor = color
     }
     
     private let topRow = UIStackView()
@@ -58,16 +82,21 @@ class StockCell: UITableViewCell {
         topRow.addArrangedSubview(nameLabel)
         topRow.addArrangedSubview(UIView()) // spacer
         topRow.addArrangedSubview(ltpLabel)
+        topRow.addArrangedSubview(ltpLabelValue)
+        
 
         bottomRow.axis = .horizontal
         bottomRow.alignment = .center
         bottomRow.distribution = .fill
         bottomRow.addArrangedSubview(qtyLabel)
+        bottomRow.addArrangedSubview(qtyLabelValue)
         bottomRow.addArrangedSubview(UIView()) // spacer
         bottomRow.addArrangedSubview(pnlLabel)
+        bottomRow.addArrangedSubview(pnlLabelValue)
 
+        
         mainStack.axis = .vertical
-        mainStack.spacing = 8
+        mainStack.spacing = 16
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         mainStack.addArrangedSubview(topRow)
         mainStack.addArrangedSubview(bottomRow)
@@ -88,12 +117,15 @@ class StockCell: UITableViewCell {
 
     func configure(stockName: String, ltp: String, qty: String, pnl: String) {
         nameLabel.text = stockName
-        ltpLabel.text = "LTP: \(ltp)"
-        qtyLabel.text = "NET QTY: \(qty)"
-        pnlLabel.text = "P&L: \(pnl)"
+        ltpLabel.text = "LTP: "
+        ltpLabelValue.text = "\(ltp)"
+        qtyLabel.text = "NET QTY: "
+        qtyLabelValue.text = "\(qty)"
+        pnlLabel.text = "P&L: "
+        pnlLabelValue.text = "\(pnl)"
 
         if let pnlValue = Double(pnl.replacingOccurrences(of: "₹", with: "").replacingOccurrences(of: ",", with: "")) {
-            pnlLabel.textColor = pnlValue < 0 ? .red : .systemGreen
+            pnlLabelValue.textColor = pnlValue < 0 ? .red : .systemGreen
         }
     }
 }

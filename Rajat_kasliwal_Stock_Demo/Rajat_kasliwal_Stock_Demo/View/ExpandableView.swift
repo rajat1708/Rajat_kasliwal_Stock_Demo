@@ -19,7 +19,7 @@ class ExpandableView: UIView {
     
     let toggleButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Profit & Loss ▼", for: .normal)
+        button.setTitle("Profit & Loss ▲", for: .normal)
         button.setTitleColor(.black, for: .normal)
         return button
     }()
@@ -31,10 +31,6 @@ class ExpandableView: UIView {
         
         backgroundColor = .white
         layer.cornerRadius = 12
-        
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.1
-        layer.shadowRadius = 4
         
         translatesAutoresizingMaskIntoConstraints = false
         toggleButton.translatesAutoresizingMaskIntoConstraints = false
@@ -62,6 +58,9 @@ class ExpandableView: UIView {
         
         heightConstraint = heightAnchor.constraint(equalToConstant: 30)
         heightConstraint.isActive = true
+        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(togglePressed))
+        self.addGestureRecognizer(gesture)
     }
     
     @objc private func togglePressed() {
@@ -71,7 +70,7 @@ class ExpandableView: UIView {
     func updateExpandedState(isExpanded: Bool) {
         detailsStackView.isHidden = !isExpanded
         heightConstraint.constant = isExpanded ? 180 : 30
-        toggleButton.setTitle(isExpanded ? "Profit & Loss ▲" : "Profit & Loss ▼", for: .normal)
+        toggleButton.setTitle(isExpanded ? "Profit & Loss ▼" : "Profit & Loss ▲ ", for: .normal)
     }
     
     func setDetails(_ details: [(String, String, UIColor)]) {

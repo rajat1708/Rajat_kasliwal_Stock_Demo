@@ -13,18 +13,9 @@ class ViewController: UIViewController, UITableViewDataSource, ExpandableViewDel
     private let expandableView = ExpandableView()
     private var viewModel: StocksViewModel?
     
-    let activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .large)
-        indicator.color = .gray
-//        indicator.translatesAutoresizingMaskIntoConstraints = false
-        indicator.hidesWhenStopped = true
-        return indicator
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        activityIndicator.startAnimating()
         setupExpandableView()
         setupTableView()
         viewModel = StocksViewModel(delegate: self)
@@ -34,6 +25,7 @@ class ViewController: UIViewController, UITableViewDataSource, ExpandableViewDel
     
     private func setupExpandableView() {
         expandableView.delegate = self
+        expandableView.backgroundColor = .systemGray6
         view.addSubview(expandableView)
         
         NSLayoutConstraint.activate([
@@ -45,11 +37,12 @@ class ViewController: UIViewController, UITableViewDataSource, ExpandableViewDel
     }
 
     private func updateExpandableViewContent() {
+        guard let viewModel = viewModel else { return }
         expandableView.setDetails([
-            ("Current value*", "\(viewModel?.currentValue() ?? 0.0)", .black),
-            ("Total investment*", "\(viewModel?.totalInvestment() ?? 0.0)", .black),
-            ("Today’s Profit & Loss*", "\(viewModel?.todayChange() ?? 0.0)", viewModel?.todayChangeColor() ?? .black),
-            ("Profit & Loss*", "\(viewModel?.totalPnL() ?? 0.0)", viewModel?.totalPnLColour() ?? .black)
+            ("Current value*", viewModel.currentValue(), .black),
+            ("Total investment*", viewModel.totalInvestment() , .black),
+            ("Today’s Profit & Loss*", viewModel.todayChange() , viewModel.todayChangeColor() ?? .black),
+            ("Profit & Loss*", viewModel.totalPnL() , viewModel.totalPnLColour())
         ])
     }
     
@@ -67,12 +60,7 @@ class ViewController: UIViewController, UITableViewDataSource, ExpandableViewDel
             tableView.bottomAnchor.constraint(equalTo: expandableView.topAnchor)
         ])
     }
-    
-    private func setupActivityIndicator() {
-        activityIndicator.center = view.center
-    }
-    
-    
+
     // MARK: - ExpandableViewDelegate
     func didToggleExpand() {
         viewModel?.toggleExpand()
@@ -115,7 +103,6 @@ extension ViewController: StocksViewModelDelegate {
             self?.tableView.isHidden = false
             self?.tableView.reloadData()
             self?.updateExpandableViewContent()
-//            self?.activityIndicator.stopAnimating()
         }
     }
 }

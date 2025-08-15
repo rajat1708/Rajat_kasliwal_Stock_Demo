@@ -71,37 +71,54 @@ class StocksViewModel {
         networkManager?.hitNetwork(for: StockRequest())
     }
     
-    func currentValue() -> Double {
+    private func currentValueDouble() -> Double {
         return stocks.reduce(0) { $0 + ($1.ltp * Double($1.quantity)) }
     }
     
-    func totalPnL() -> Double {
-        let totalPl = currentValue() - totalInvestment()
+    func currentValue() -> String {
+        "₹\(String(format: "%.2f", currentValueDouble()))"
+    }
+    
+    func totalPnLDouble() -> Double {
+        let totalPl = currentValueDouble() - totalInvestmentDouble()
         return Double(round(1000000 * totalPl) / 1000000)
     }
     
+    func totalPnL() -> String {
+        "₹\(String(format: "%.2f", totalPnLDouble()))"
+    }
+    
     func totalPnLColour() -> UIColor {
-        let totalPnl = totalPnL()
+        let totalPnl = totalPnLDouble()
         if totalPnl == 0 {
             return .black
         }
         return totalPnl < 0 ? .red : .systemGreen
     }
     
-    func totalInvestment() -> Double {
+    func totalInvestmentDouble() -> Double {
         let totalInvestment = stocks.reduce(0) { $0 + ($1.avgPrice * Double($1.quantity)) }
         // send upto 6 decimal place
         return Double(round(1000000 * totalInvestment) / 1000000)
     }
     
-    func todayChange() -> Double {
+    func totalInvestment() -> String {
+        "₹\(String(format: "%.2f", totalInvestmentDouble()))"
+    }
+    
+    private func todayChangeDouble() -> Double {
         let todayChange =  stocks.reduce(0) { $0 + ($1.close - $1.ltp) * Double($1.quantity) }
         // send upto 6 decimal place
         return Double(round(1000000 * todayChange) / 1000000)
     }
     
+    func todayChange() -> String {
+        "₹\(String(format: "%.2f", todayChangeDouble()))"
+
+    }
+    
     func todayChangeColor() -> UIColor {
-        let change = todayChange()
+        let change = todayChangeDouble()
         if change == 0 {
             return .black
         }
