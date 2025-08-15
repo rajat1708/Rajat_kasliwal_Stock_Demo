@@ -1,8 +1,8 @@
 import Foundation
 
 struct UserHolding : Codable {
-	let symbol : String
-	let quantity : Int
+    let symbol : String
+    let quantity : Int
     let ltp : Double
     let avgPrice : Double
     let close : Double
@@ -18,16 +18,16 @@ struct UserHolding : Codable {
     var pnl: Double {
         return (ltp - avgPrice) * Double(quantity)
     }
-
-	enum CodingKeys: String, CodingKey {
-
-		case symbol = "symbol"
-		case quantity = "quantity"
-		case ltp = "ltp"
-		case avgPrice = "avgPrice"
-		case close = "close"
-	}
-
+    
+    enum CodingKeys: String, CodingKey {
+        
+        case symbol = "symbol"
+        case quantity = "quantity"
+        case ltp = "ltp"
+        case avgPrice = "avgPrice"
+        case close = "close"
+    }
+    
     
     struct UserHoldingDefaultValues {
         static let symbol = ""
@@ -37,13 +37,13 @@ struct UserHolding : Codable {
         static let close = 0.0
     }
     
-	init(from decoder: Decoder) throws {
-		let values = try decoder.container(keyedBy: CodingKeys.self)
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
         symbol = try values.decodeIfPresent(String.self, forKey: .symbol) ?? UserHoldingDefaultValues.symbol
         quantity = try values.decodeIfPresent(Int.self, forKey: .quantity) ?? UserHoldingDefaultValues.quantity
         ltp = try values.decodeIfPresent(Double.self, forKey: .ltp) ?? UserHoldingDefaultValues.ltp
         avgPrice = try values.decodeIfPresent(Double.self, forKey: .avgPrice) ?? UserHoldingDefaultValues.avgPrice
         close = try values.decodeIfPresent(Double.self, forKey: .close) ?? UserHoldingDefaultValues.close
-	}
-
+    }
+    
 }

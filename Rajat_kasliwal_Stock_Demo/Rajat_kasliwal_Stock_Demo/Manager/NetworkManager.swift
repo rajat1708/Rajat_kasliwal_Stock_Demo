@@ -24,7 +24,6 @@ class NetworkManager: NSObject {
     
     private var session: URLSession?
     private weak var delegate: NetworkManagerDelegate?
-//    let urlFor =  "https://35dee773a9ec441e9f38d5fc249406ce.api.mockbin.io/"
     func hitNetwork(for request: NetworkRequestProtocol) {
         
         guard let url = URL(string: request.requestURLString) else {
@@ -47,7 +46,6 @@ class NetworkManager: NSObject {
             guard let self = self, let data = data else { return }
             print("Received data: \(data)")
             delegate?.didReceiveData(data)
-
         }
         
         if let task = task {

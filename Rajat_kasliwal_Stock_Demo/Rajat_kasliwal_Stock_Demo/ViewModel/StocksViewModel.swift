@@ -31,10 +31,6 @@ class StocksViewModel {
         return stocks.count
     }
     
-    func stock(at index: Int) -> UserHolding {
-        return stocks[index]
-    }
-    
     func formattedLTP(_ stock: UserHolding) -> String {
         return "₹\(String(format: "%.2f", stock.ltp))"
     }
@@ -114,7 +110,6 @@ class StocksViewModel {
     
     func todayChange() -> String {
         "₹\(String(format: "%.2f", todayChangeDouble()))"
-
     }
     
     func todayChangeColor() -> UIColor {
@@ -128,10 +123,6 @@ class StocksViewModel {
 
 extension StocksViewModel: NetworkManagerDelegate {
     func didReceiveData(_ data: Data) {
-        // Handle the received data
-        // Parse the data into the stocks array or update UI accordingly
-        
-        // Convert Data into Json4Swift_Base for model creation
         do {
             let jsonDecoder = JSONDecoder()
             let stocksData = try jsonDecoder.decode(StockDetails.self, from: data)
@@ -147,7 +138,7 @@ extension StocksViewModel: NetworkManagerDelegate {
         //
     }
 }
-    
+
 #if DEBUG
 extension StocksViewModel {
     func setStocksForTesting(_ stocks: [UserHolding]) {

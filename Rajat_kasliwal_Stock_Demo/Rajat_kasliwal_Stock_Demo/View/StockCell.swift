@@ -9,14 +9,14 @@
 import UIKit
 
 class StockCell: UITableViewCell {
-
+    
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.numberOfLines = 1
         return label
     }()
-
+    
     private let ltpLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
@@ -32,7 +32,7 @@ class StockCell: UITableViewCell {
         label.numberOfLines = 1
         return label
     }()
-
+    
     private let qtyLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
@@ -48,7 +48,7 @@ class StockCell: UITableViewCell {
         label.numberOfLines = 1
         return label
     }()
-
+    
     private let pnlLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
@@ -56,7 +56,7 @@ class StockCell: UITableViewCell {
         label.numberOfLines = 1
         return label
     }()
-
+    
     private let pnlLabelValue: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
@@ -71,10 +71,10 @@ class StockCell: UITableViewCell {
     private let topRow = UIStackView()
     private let bottomRow = UIStackView()
     private let mainStack = UIStackView()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+        
         // Configure stack views
         topRow.axis = .horizontal
         topRow.alignment = .center
@@ -84,7 +84,7 @@ class StockCell: UITableViewCell {
         topRow.addArrangedSubview(ltpLabel)
         topRow.addArrangedSubview(ltpLabelValue)
         
-
+        
         bottomRow.axis = .horizontal
         bottomRow.alignment = .center
         bottomRow.distribution = .fill
@@ -93,16 +93,16 @@ class StockCell: UITableViewCell {
         bottomRow.addArrangedSubview(UIView()) // spacer
         bottomRow.addArrangedSubview(pnlLabel)
         bottomRow.addArrangedSubview(pnlLabelValue)
-
+        
         
         mainStack.axis = .vertical
         mainStack.spacing = 16
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         mainStack.addArrangedSubview(topRow)
         mainStack.addArrangedSubview(bottomRow)
-
+        
         contentView.addSubview(mainStack)
-
+        
         NSLayoutConstraint.activate([
             mainStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -110,11 +110,11 @@ class StockCell: UITableViewCell {
             mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
         ])
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     func configure(stockName: String, ltp: String, qty: String, pnl: String) {
         nameLabel.text = stockName
         ltpLabel.text = "LTP: "
@@ -123,7 +123,7 @@ class StockCell: UITableViewCell {
         qtyLabelValue.text = "\(qty)"
         pnlLabel.text = "P&L: "
         pnlLabelValue.text = "\(pnl)"
-
+        
         if let pnlValue = Double(pnl.replacingOccurrences(of: "₹", with: "").replacingOccurrences(of: ",", with: "")) {
             pnlLabelValue.textColor = pnlValue < 0 ? .red : .systemGreen
         }

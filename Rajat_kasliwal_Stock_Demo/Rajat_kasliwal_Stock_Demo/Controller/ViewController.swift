@@ -35,13 +35,13 @@ class ViewController: UIViewController, UITableViewDataSource, ExpandableViewDel
         ])
         updateExpandableViewContent()
     }
-
+    
     private func updateExpandableViewContent() {
         guard let viewModel = viewModel else { return }
         expandableView.setDetails([
             ("Current value*", viewModel.currentValue(), .black),
             ("Total investment*", viewModel.totalInvestment() , .black),
-            ("Today’s Profit & Loss*", viewModel.todayChange() , viewModel.todayChangeColor() ?? .black),
+            ("Today’s Profit & Loss*", viewModel.todayChange() , viewModel.todayChangeColor()),
             ("Profit & Loss*", viewModel.totalPnL() , viewModel.totalPnLColour())
         ])
     }
@@ -60,7 +60,7 @@ class ViewController: UIViewController, UITableViewDataSource, ExpandableViewDel
             tableView.bottomAnchor.constraint(equalTo: expandableView.topAnchor)
         ])
     }
-
+    
     // MARK: - ExpandableViewDelegate
     func didToggleExpand() {
         viewModel?.toggleExpand()
